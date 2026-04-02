@@ -7,6 +7,39 @@
 
 </head>
 <body>
+  <!-- Reproductor de música oculto -->
+<audio id="player" loop>
+  <source src="musica.mp3" type="audio/mpeg">
+  Tu navegador no soporta el audio.
+</audio>
+
+<!-- Botón flotante para controlar la música (Opcional pero recomendado) -->
+<button id="musicControl" style="position: fixed; top: 20px; right: 20px; z-index: 100; padding: 10px; border-radius: 50%; border: none; background: rgba(255, 255, 255, 0.3); cursor: pointer; color: white;">
+  🎵
+</button>
+
+<script>
+  const audio = document.getElementById('player');
+  const btn = document.getElementById('musicControl');
+
+  // Intentar reproducir automáticamente al cargar
+  window.addEventListener('load', () => {
+    audio.play().catch(() => {
+      console.log("El navegador bloqueó el autoplay. Se necesita un clic.");
+    });
+  });
+
+  // Botón para pausar/reproducir si ella quiere
+  btn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play();
+      btn.style.opacity = "1";
+    } else {
+      audio.pause();
+      btn.style.opacity = "0.5";
+    }
+  });
+</script>
 <!-- partial:index.partial.html -->
 <body class="container">
   <div class="night"></div>
