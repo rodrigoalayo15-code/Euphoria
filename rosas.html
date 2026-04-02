@@ -19,18 +19,24 @@
 </button>
 
 <script>
-  const audio = document.getElementById('player');
+  const audio = document.getElementById('player'); // Corregido: getElementById
   const btn = document.getElementById('musicControl');
 
-  // Intentar reproducir automáticamente al cargar
+  // Intentar reproducir al cargar la página
   window.addEventListener('load', () => {
     audio.play().catch(() => {
-      console.log("El navegador bloqueó el autoplay. Se necesita un clic.");
+      console.log("El navegador requiere una interacción para sonar.");
     });
   });
 
-  // Botón para pausar/reproducir si ella quiere
-  btn.addEventListener('click', () => {
+  // ESTO ES CLAVE: Activa el sonido al tocar cualquier parte de la pantalla
+  document.body.addEventListener('click', () => {
+      audio.play();
+  }, { once: true }); // Solo se ejecuta una vez
+
+  // Botón manual de pausa/play
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation(); // Evita conflictos con el clic del body
     if (audio.paused) {
       audio.play();
       btn.style.opacity = "1";
